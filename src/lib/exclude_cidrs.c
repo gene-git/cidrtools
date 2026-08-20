@@ -38,6 +38,13 @@ static bool cidr_exclude_single(const CtCidr *broad, const CtCidr *ex, CtCidrs *
     CtCidr current_fragment = {};
     uint8_t target_prefix = 0U;
 
+    /* 
+     * Check if exclucd subnet fully contains the "broad" subnet.
+     */
+    if (ct_cidr_contains_cidr(ex, broad)) {
+        return true; 
+    }
+
     /*
      * If families mismatch or they don't intersect, preserve the broad block
      */

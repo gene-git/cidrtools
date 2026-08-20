@@ -5,7 +5,7 @@ SOURCEDIR     = .
 BUILDDIR      = _build
 PKG           = cidrtools
 
-SOURCES = conf.py c-api.rst Readme.rst \
+SOURCES = conf.py c-api.rst Readme.rst ../../version.txt \
           $(wildcard lib/*.c) \
           $(wildcard lib/*.h)
 

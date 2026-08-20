@@ -94,9 +94,10 @@ To run the tests standard tests without using valgrind, do:
 Recent Changes
 ==============
 
-**1.0.0**
+**1.1.0**
 
-* Initial release.
+* Bug fix: Original code assumed excluded cidrs are subnets. 
+  Enhance code to handle excluded networks being supernets. 
 
 AI Tooling
 ==========

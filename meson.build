@@ -322,6 +322,15 @@ t_exclude_cidrs = executable('t_exclude_cidrs',
   install_dir: d_bin
 )
 
+t_exclude_cidrs_2 = executable('t_exclude_cidrs_2',
+  sources: ['src/tests/t_exclude_cidrs_2.c'],
+  dependencies: [cidrtools_dep],
+  c_args: my_cflags,
+  link_args: my_ldflags,
+  install: false,
+  install_dir: d_bin
+)
+
 t_set_prefix = executable('t_set_prefix',
   sources: ['src/tests/t_set_prefix.c'],
   dependencies: [cidrtools_dep],
@@ -527,6 +536,7 @@ test( 't_sort_test', t_sort, suite: ['unit', 'network'])
 test( 't_family_checks_test', t_family_checks, suite: ['unit', 'network'])
 test( 't_cidr_fix_host_bits_test', t_cidr_fix_host_bits, suite: ['unit', 'network'])
 test( 't_exclude_cidrs_test', t_exclude_cidrs, suite: ['unit', 'network'])
+test( 't_exclude_cidrs_2_test', t_exclude_cidrs_2, suite: ['unit', 'network'])
 test( 't_set_prefix_test', t_set_prefix, suite: ['unit', 'network'])
 test( 't_subnets_split_test', t_subnets_split, suite: ['unit', 'network'])
 test( 't_clean_cidrs_test', t_clean_cidrs, suite: ['unit', 'network'])
