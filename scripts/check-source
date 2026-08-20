@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+#
+# Source code checks
+#
+libs=(src/lib)
+apps=(src/apps)
+tests=(src/tests)
+
+echo "==> cppcheck:"
+
+/usr/bin/cppcheck "${libs[@]}" "${apps[@]}" "${tests[@]}"
+
+echo ""
+echo "==> clamg-tidy"
+
+shopt -s nullglob
+for dir in "${libs[@]}" "${apps[@]}" "${tests[@]}"
+do
+    /usr/bin/clang-tidy -p build/release "${dir}"/*.[ch]
+done
+
+exit
+
+

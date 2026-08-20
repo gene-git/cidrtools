@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+# Runs all meson tests
+#
+# One option arg is the test setup:
+# - standard (default)
+# - valgrind 
+#
+setup="standard"
+buildtype="release"
+
+if (( $# > 0 )) ; then
+    if [[ "$1" == "valgrind" ]] ; then
+        setup="$1"
+        buildtype="debug"
+    fi
+fi
+
+/usr/bin/meson test -C build/"$buildtype" --setup="$setup"
+
+

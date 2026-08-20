@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+#
+# Install
+# - arguments:
+#   - no args: destination is "build/pkg".
+#   - destination   =>  install to this directory
+#
+
+if (( $# < 1 )) ; then
+    dest='build/pkg'
+else
+    dest="$1"
+fi
+
+pkgdir=$(realpath "$dest")
+
+/usr/bin/meson install -C build/release --destdir "$pkgdir" > /dev/null
+

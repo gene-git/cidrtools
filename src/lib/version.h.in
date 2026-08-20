@@ -1,0 +1,10 @@
+/*
+ * version.h.in
+ */
+#ifndef CIDRTOOLS_VERSION_H
+#define CIDRTOOLS_VERSION_H
+
+#define CIDRTOOLS_VERSION "@VERSION@"
+
+#endif
+
