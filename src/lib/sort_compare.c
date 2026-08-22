@@ -8,10 +8,16 @@
 #include <string.h>
 #include <sys/socket.h>
 
-/*
- * internal comparison function for IPv4 and IPv6
+/**
+ * Compare two CtCidr blocks - handle IPv4 and IPv6.
+ *
+ * The arguments are (void *) for convenience use with qsort. 
+ *
+ * :param a: first cidr
+ * :param b: second cidr
+ * :returns: -1, 0 or 1 if a < b, a == b or a > b
  */
-int cidr_sort_compare(const void *a, const void *b) {
+int ct_cidr_sort_compare(const void *a, const void *b) {
     const CtCidr *block_a = (const CtCidr *)a;
     const CtCidr *block_b = (const CtCidr *)b;
     uint32_t ip_a = 0;
@@ -81,51 +87,4 @@ int cidr_sort_compare(const void *a, const void *b) {
             return 0;
     }
 }
-
-#ifdef UNUSEDOLD
-static int cidr_sort_compare(const void *a, const void *b) {
-    const CtCidr *block_a = (const CtCidr *)a;
-    const CtCidr *block_b = (const CtCidr *)b;
-    uint32_t ip_a = 0;
-    uint32_t ip_b = 0;
-    int cmp = 0;
-
-    /*
-     *  Sort by family first (IPv4 ahead of IPv6)
-     */
-    if (block_a->addr.family != block_b->addr.family) {
-        return (block_a->addr.family < block_b->addr.family) ? -1 : 1;
-    }
-
-    switch (block_a->addr.family) {
-        case AF_INET:
-            ip_a = ntohl(block_a->addr.addr.v4.s_addr);
-            ip_b = ntohl(block_b->addr.addr.v4.s_addr);
-
-            if (ip_a != ip_b) {
-                return (ip_a < ip_b) ? -1 : 1;
-            }
-
-            /*
-             * Tie-breaker: 
-             * - IPs are identical, wider prefixes (smaller numbers, e.g. /16) sort first
-             */
-            return (block_a->prefix < block_b->prefix) ? -1 : (block_a->prefix > block_b->prefix);
-
-        case AF_INET6:
-            cmp = memcmp(block_a->addr.addr.v6.s6_addr, block_b->addr.addr.v6.s6_addr, 16);
-            if (cmp != 0) {
-                return cmp;
-            }
-
-            /*
-             * Tie-breaker
-             */
-            return (block_a->prefix < block_b->prefix) ? -1 : (block_a->prefix > block_b->prefix);
-
-        default:
-            return 0;
-    }
-}
-#endif
 

@@ -8,10 +8,60 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(void) {
+
+/*
+ * Check result is correct.
+ */
+static int check_result_correct(CtCidrs *cidrs) {
     int failed = 0;
     char cidr_str[INET6_ADDRSTRLEN] = {};
     size_t cidr_str_size = sizeof(cidr_str);
+
+    /*
+     * Check result Expect: 192.16.2.105/32 192.16.214.104/32
+     */
+    for (size_t i = 0; i < cidrs->count; i++) {
+        if (ct_cidr_to_str_r(&cidrs->blocks[i], cidr_str, cidr_str_size) != 0) {
+            printf("[FAIL] Error from ct_cidr_to_str_r\n");
+            failed++;
+            goto cleanup;
+        }
+        printf("  -> %s\n", cidr_str); 
+    }
+
+    if (cidrs->count == 2U) {       // NOLINT(readability-magic-numbers)
+        if (ct_cidr_to_str_r(&cidrs->blocks[0], cidr_str, cidr_str_size) != 0) {
+            printf("[FAIL] Error from ct_cidr_to_str_r\n");
+            failed++;
+            goto cleanup;
+        }
+
+        if (strcmp(cidr_str, "192.16.2.105/32") == 0) {
+            printf("[SUCCESS] First output is correct\n");
+        } else {
+            printf("[FAIL] First cidr is wrong.\n");
+            failed++;
+        }
+
+        if (ct_cidr_to_str_r(&cidrs->blocks[1], cidr_str, cidr_str_size) != 0) {
+            printf("[FAIL] Error from ct_cidr_to_str_r\n");
+            failed++;
+            goto cleanup;
+        }
+
+        if (strcmp(cidr_str, "192.16.214.104/32") == 0) {
+            printf("[SUCCESS] Second output is correct\n");
+        } else {
+            printf("[FAIL] Second cidr is wrong.\n");
+            failed++;
+        }
+    } 
+cleanup:
+    return failed;
+}
+
+int main(void) {
+    int failed = 0;
 
     printf("=== Testing ct_exclude_cidrs ===\n");
 
@@ -36,13 +86,13 @@ int main(void) {
      * Initialize
      */
     if (ct_flat_buffer_to_cidrs(all_str, count, &cidrs) != 0) {
-        printf("[FAIL] maling CtCidrs\n");
+        printf("[FAIL] making CtCidrs\n");
         failed++;
         goto cleanup;
     }
 
     if (ct_flat_buffer_to_cidrs(exl_str, count_exl, &excld) != 0) {
-        printf("[FAIL] maling CtCidrs\n");
+        printf("[FAIL] making CtCidrs\n");
         failed++;
         goto cleanup;
     }
@@ -64,47 +114,9 @@ int main(void) {
     } 
 
     /*
-     * Check result Expect: 192.16.2.105/32 192.16.214.104/32
-     */
-    for (size_t i = 0; i < cidrs.count; i++) {
-        if (ct_cidr_to_str_r(&cidrs.blocks[i], cidr_str, cidr_str_size) != 0) {
-            printf("[FAIL] Error from ct_cidr_to_str_r\n");
-            failed++;
-            goto cleanup;
-        }
-        printf("  -> %s\n", cidr_str); 
-    }
-
-    /*
      * Check result is correct.
      */
-    if (cidrs.count == 2U) {       // NOLINT(readability-magic-numbers)
-        if (ct_cidr_to_str_r(&cidrs.blocks[0], cidr_str, cidr_str_size) != 0) {
-            printf("[FAIL] Error from ct_cidr_to_str_r\n");
-            failed++;
-            goto cleanup;
-        }
-
-        if (strcmp(cidr_str, "192.16.2.105/32") == 0) {
-            printf("[SUCCESS] First output is correct\n");
-        } else {
-            printf("[FAIL] First cidr is wrong.\n");
-            failed++;
-        }
-
-        if (ct_cidr_to_str_r(&cidrs.blocks[1], cidr_str, cidr_str_size) != 0) {
-            printf("[FAIL] Error from ct_cidr_to_str_r\n");
-            failed++;
-            goto cleanup;
-        }
-
-        if (strcmp(cidr_str, "192.16.214.104/32") == 0) {
-            printf("[SUCCESS] Second output is correct\n");
-        } else {
-            printf("[FAIL] Second cidr is wrong.\n");
-            failed++;
-        }
-    } 
+    failed += check_result_correct(&cidrs);
 
 cleanup:
     ct_free_cidrs(&cidrs);

@@ -77,7 +77,6 @@ void compact_v6(CtCidrs *cidrs);
 int range_to_cidrs_v4(uint32_t start, uint32_t end, CtCidrs *cidrs);
 int range_to_cidrs_v6(const uint8_t *start_bytes, const uint8_t *end_bytes, CtCidrs *cidrs);
 
-int cidr_sort_compare(const void *a, const void *b);
 
 
 /*
@@ -93,6 +92,7 @@ CIDRTOOLS_EXPORT bool ct_cidr_contains_ip(const CtCidr *cidr, const CtAddress *i
 CIDRTOOLS_EXPORT bool ct_cidr_contains_cidr(const CtCidr *parent, const CtCidr *target);
 CIDRTOOLS_EXPORT int ct_cidr_fix_host_bits(CtCidr *cidr);
 CIDRTOOLS_EXPORT bool ct_cidr_is_subnet(const CtCidr *cidr, const CtCidrs *cidrs);
+CIDRTOOLS_EXPORT int ct_cidrs_intersection(CtCidrs *cidrs1, CtCidrs *cidrs2, CtCidrs *cidrs);
 CIDRTOOLS_EXPORT int ct_cidr_to_range(const CtCidr *cidr, CtAddress *first, CtAddress *last);
 CIDRTOOLS_EXPORT int ct_cidr_to_range_mid(const CtCidr *cidr, CtAddress *first, CtAddress *mid, CtAddress *last);
 CIDRTOOLS_EXPORT char *ct_cidr_to_str(const CtCidr *cidr);
@@ -108,6 +108,7 @@ CIDRTOOLS_EXPORT size_t ct_num_ips(const CtCidr *cidr);
 CIDRTOOLS_EXPORT int ct_range_to_cidrs(const CtAddress *first, const CtAddress *last, CtCidrs *cidrs);
 CIDRTOOLS_EXPORT int ct_cidr_set_prefix(CtCidr *cidr, uint8_t prefix);
 CIDRTOOLS_EXPORT int ct_sort(CtCidrs *cidrs);
+CIDRTOOLS_EXPORT int ct_cidr_sort_compare(const void *a, const void *b);
 CIDRTOOLS_EXPORT int ct_str_to_cidr_block(const char *str, CtCidr *cidr);
 
 CIDRTOOLS_EXPORT int ct_str_array_to_cidrs(const char **str_array, size_t count, CtCidrs *cidrs);

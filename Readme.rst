@@ -18,6 +18,19 @@ There is a companion `cidrtools-cffi <https://github.com/gene-git/cidrtools-cffi
 package providing Python bindings to the library.
 This module is significantly faster than a pure Python implementation using the *ipaddr* module.
 
+Recent Changes
+==============
+
+**1.2.0**
+
+* Add ct_cidrs_intersection().
+  Computes the intersecting subnet(s) of two sets of cidr blocks.
+
+**1.1.0**
+
+* Bug fix: Original code assumed excluded cidrs are subnets. 
+  Enhance code to handle excluded networks being supernets. 
+
 hostcheck application
 =====================
 
@@ -91,13 +104,6 @@ To run the tests standard tests without using valgrind, do:
    ./scripts/run-tests 
 
 
-Recent Changes
-==============
-
-**1.1.0**
-
-* Bug fix: Original code assumed excluded cidrs are subnets. 
-  Enhance code to handle excluded networks being supernets. 
 
 AI Tooling
 ==========

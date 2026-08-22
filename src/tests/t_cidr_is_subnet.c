@@ -11,7 +11,7 @@ int main(void) {
     int failed = 0;
     CtCidrs cidrs = {};
 
-    printf("=== Testing ct_cidr_is_subnet (C23) ===\n");
+    printf("=== Testing ct_cidr_is_subnet ===\n");
 
     if (!ct_allocate_cidrs(2, &cidrs)) {
         printf("[FAIL] Error alloc memory\n");

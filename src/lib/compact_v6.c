@@ -105,7 +105,7 @@ void compact_v6(CtCidrs *cidrs) {
     while (modified) {
         // Optimize: Only pay the qsort penalty if the array ordering was actually broken
         if (needs_sort) {
-            qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), cidr_sort_compare);
+            qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), ct_cidr_sort_compare);
             needs_sort = false;
         }
 
@@ -130,7 +130,7 @@ void compact_v6(CtCidrs *cidrs) {
                 // If we aren't at the very first element of the array, verify if our
                 // newly expanded block has outindexed the item sitting right behind it.
                 if (write_idx > 0) {
-                    if (cidr_sort_compare(&cidrs->blocks[write_idx - 1], current_stable) > 0) {
+                    if (ct_cidr_sort_compare(&cidrs->blocks[write_idx - 1], current_stable) > 0) {
                         needs_sort = true; // Order broken! A resort will be required next pass.
                     }
                 }

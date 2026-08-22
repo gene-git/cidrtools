@@ -43,5 +43,6 @@ lib_sources += files(
   'flat_buffer_to_cidrs.c',
   'cidrs_to_flat_buffer.c',
   'sort_compare.c',
+  'cidrs_intersection.c',
 )
 

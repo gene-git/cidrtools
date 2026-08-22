@@ -44,7 +44,7 @@ int ct_sort(CtCidrs *cidrs) {
         free(str);
     }
 
-    qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), cidr_sort_compare);
+    qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), ct_cidr_sort_compare);
 
     return 0;
 }

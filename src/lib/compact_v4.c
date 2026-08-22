@@ -99,7 +99,7 @@ void old_compact_v4(CtCidrs *cidrs) {
     bool modified = true;
 
     //qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), cidr_compare_v4);
-    qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), cidr_sort_compare);
+    qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), ct_cidr_sort_compare);
 
     while (modified) {
         size_t write_idx = 0;
@@ -151,7 +151,7 @@ void compact_v4(CtCidrs *cidrs) {
          *  Only re-sort if order was broken by a previous merge loop
          */
         if (needs_sort) {
-            qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), cidr_sort_compare);
+            qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), ct_cidr_sort_compare);
             needs_sort = false;
         }
 
@@ -189,7 +189,7 @@ void compact_v4(CtCidrs *cidrs) {
                 // If this expanded block now out-indexes the element directly behind it,
                 // we mark the array as dirty to trigger a quick qsort repair on the next pass.
                 if (write_idx > 0) {
-                    if (cidr_sort_compare(&cidrs->blocks[write_idx - 1], current_stable) > 0) {
+                    if (ct_cidr_sort_compare(&cidrs->blocks[write_idx - 1], current_stable) > 0) {
                         needs_sort = true;
                     }
                 }

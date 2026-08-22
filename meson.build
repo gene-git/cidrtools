@@ -449,6 +449,15 @@ t_cidrs_to_flat_buffer = executable('t_cidrs_to_flat_buffer',
   install_dir: d_bin
 )
 
+t_cidrs_intersection = executable('t_cidrs_intersection',
+  sources: ['src/tests/t_cidrs_intersection.c'],
+  dependencies: [cidrtools_dep],
+  c_args: my_cflags,
+  link_args: my_ldflags,
+  install: false,
+  install_dir: d_bin
+)
+
 # ------------------
 ## Install
 #
@@ -551,7 +560,5 @@ test('t_hostname_to_address', t_hostname_to_address, suite: ['unit', 'network'])
 test('t_split_by_family', t_split_by_family, suite: ['unit', 'network'])
 test('t_flat_buffer_to_cidrs', t_flat_buffer_to_cidrs, suite: ['unit', 'network'])
 test('t_cidrs_to_flat_buffer', t_cidrs_to_flat_buffer, suite: ['unit', 'network'])
-
-
-
+test('t_cidrs_intersection', t_cidrs_intersection, suite: ['unit', 'network'])
 
