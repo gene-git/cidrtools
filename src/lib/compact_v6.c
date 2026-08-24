@@ -21,7 +21,8 @@ static bool try_merge_adjacent_v6(const CtCidr *a, const CtCidr *b, CtCidr *merg
     uint8_t i = 0;
     bool match = true;
 
-    if (a->prefix != b->prefix || a->prefix <= 8U || a->prefix > 128U) {
+    //if (a->prefix != b->prefix || a->prefix <= 8U || a->prefix > 128U) {
+    if (a->prefix != b->prefix || a->prefix < 1U || a->prefix > 128U) {
         return false;
     }
 
@@ -91,16 +92,32 @@ static bool try_merge_adjacent_v6(const CtCidr *a, const CtCidr *b, CtCidr *merg
  * All the cidr blocks must be the same IP family - either IPv4 or IPv6
  *
  * :param cidrs: The list of cidr_blocks to be compacted
- *
  * :returns: -1 on error, otherwise 0.
+ *
+ * Note - caller is compact() which has already vetted input
+ * cidrs, cidrs->count > 1 etc
  */
 void compact_v6(CtCidrs *cidrs) {
+
+    /*
     if (!cidrs || cidrs->count <= 1 || !cidrs->blocks) {
         return;
     }
+    */
 
     bool modified = true;
-    bool needs_sort = true; // Initial sort is mandatory
+    bool needs_sort = true;
+
+    qsort(cidrs->blocks, cidrs->count, sizeof(CtCidr), ct_cidr_sort_compare);
+    needs_sort = false;
+
+    /*
+     * Special case default ::/0
+     */
+    if (cidrs->blocks[0].prefix == 0) {
+        cidrs->count = 1U;
+        return;
+    }
 
     while (modified) {
         // Optimize: Only pay the qsort penalty if the array ordering was actually broken

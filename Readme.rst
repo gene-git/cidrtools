@@ -21,15 +21,16 @@ This module is significantly faster than a pure Python implementation using the 
 Recent Changes
 ==============
 
+**1.3.0**
+
+* Add new ct_str_to_cidr_block_limit() which caller can set minimum prefix permitted
+* compact() add support for mixed IPv4 / IPv6 arrays of cidr blocks.
+* compact() add a special check if array of cidrs includes 0.0.0.0/0 or ::/0 
+
 **1.2.0**
 
 * Add ct_cidrs_intersection().
   Computes the intersecting subnet(s) of two sets of cidr blocks.
-
-**1.1.0**
-
-* Bug fix: Original code assumed excluded cidrs are subnets. 
-  Enhance code to handle excluded networks being supernets. 
 
 hostcheck application
 =====================

@@ -286,6 +286,24 @@ t_compact = executable('t_compact',
   install_dir: d_bin
 )
 
+t_compact_default = executable('t_compact_default',
+  sources: ['src/tests/t_compact_default.c'],
+  dependencies: [cidrtools_dep],
+  c_args: my_cflags,
+  link_args: my_ldflags,
+  install: false,
+  install_dir: d_bin
+)
+
+t_compact_mixed = executable('t_compact_mixed',
+  sources: ['src/tests/t_compact_mixed.c'],
+  dependencies: [cidrtools_dep],
+  c_args: my_cflags,
+  link_args: my_ldflags,
+  install: false,
+  install_dir: d_bin
+)
+
 t_sort = executable('t_sort',
   sources: ['src/tests/t_sort.c'],
   dependencies: [cidrtools_dep],
@@ -541,6 +559,8 @@ test( 't_range_to_cidrs_test', t_range_to_cidrs, suite: ['unit', 'network'])
 test( 't_cidr_to_range_test', t_cidr_to_range, suite: ['unit', 'network'])
 test( 't_cidr_to_range_mid_test', t_cidr_to_range_mid, suite: ['unit', 'network'])
 test( 't_compact_test', t_compact, suite: ['unit', 'network'])
+test( 't_compact_default_test', t_compact_default, suite: ['unit', 'network'])
+test( 't_compact_mixed_test', t_compact_mixed, suite: ['unit', 'network'])
 test( 't_sort_test', t_sort, suite: ['unit', 'network'])
 test( 't_family_checks_test', t_family_checks, suite: ['unit', 'network'])
 test( 't_cidr_fix_host_bits_test', t_cidr_fix_host_bits, suite: ['unit', 'network'])

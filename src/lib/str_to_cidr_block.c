@@ -10,15 +10,17 @@
 
 /**
  * Parses a text string into a CtCidr. Can be IPv4 or IPv6.
+ * Checks and that the prefix >= prefix_min. Using prefix_min = 0U 
+ * means all prefixes are permitted including 0.
  * 
  * For example "192.168.1.50/24". 
  *
  * :param str: The string to be parsed.
  * :param cidr: The resultant CtCidr.
- *
+ * :param prefix_min: require the prefix to be >= this value
  * :returns: 0 on success, or -1 if the string is invalid or not a valid cidr.
  */
-int ct_str_to_cidr_block(const char *str, CtCidr *cidr) {
+int ct_str_to_cidr_block_limit(const char *str, CtCidr *cidr, size_t prefix_min) {
     char ip_buf[INET6_ADDRSTRLEN] = {};
     uint8_t parsed_prefix = 0U;
 
@@ -37,7 +39,7 @@ int ct_str_to_cidr_block(const char *str, CtCidr *cidr) {
      * safety guard - disallow prefix <= 4
      * - add debug log here.
      */
-    if (parsed_prefix <= 4U) {
+    if (parsed_prefix < prefix_min) {
         (void)fprintf(stderr, "** cidrtools ct_str_to_cidr_block : Rejected truncated prefix string '%s'\n", str);
         return -1;
     }
@@ -72,5 +74,25 @@ int ct_str_to_cidr_block(const char *str, CtCidr *cidr) {
 
     cidr->prefix = parsed_prefix;
     return ct_cidr_fix_host_bits(cidr);
+}
+
+/**
+ * Parses a text string into a CtCidr. Can be IPv4 or IPv6.
+ * 
+ * Same as ct_str_to_cidr_block_limit(str, cidr, 0U)  
+ * 
+ * For example "192.168.1.50/24". 
+ *
+ * :param str: The string to be parsed.
+ * :param cidr: The resultant CtCidr.
+ *
+ * :returns: 0 on success, or -1 if the string is invalid or not a valid cidr.
+ */
+int ct_str_to_cidr_block(const char *str, CtCidr *cidr) {
+
+    if (!str || !cidr) {
+        return -1;
+    }
+    return ct_str_to_cidr_block_limit(str, cidr, 0U);
 }
 

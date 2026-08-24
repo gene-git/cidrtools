@@ -14,6 +14,7 @@ int main(void) {
 
     CtCidr block1 = {};
     CtCidr block2 = {};
+    CtCidr block3 = {};
     char cidr_str[INET_ADDRSTRLEN] = {};
     size_t cidr_str_size = sizeof(cidr_str);
 
@@ -48,6 +49,29 @@ int main(void) {
             failed++;
         }
     }
+
+    /*
+     * Test 3: Ip string with no prefix limit
+     */
+    if (ct_str_to_cidr_block_limit("0.0.0.0/2", &block3, 0U) == 0) {
+        if (ct_cidr_to_str_r(&block3, cidr_str,cidr_str_size) != 0) {
+            printf("[FAIL] Error parsing str to cidr\n");
+            failed++;
+            goto exit;
+        }
+
+        if (strcmp(cidr_str, "0.0.0.0/2") == 0) {
+            printf("[OK] Success parsed with no prefix limit: %s\n", cidr_str);
+        } else {
+            printf("[FAIL] Failed to parse and clean. Got: %s\n", cidr_str);
+            failed++;
+        }
+    } else {
+        printf("[FAIL] Str to CIDR parsing for IPv4\n");
+        failed++;
+    }
+
+exit:
     return (failed > 0) ? 1 : 0;
 }
 

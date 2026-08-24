@@ -14,6 +14,7 @@ int main(void) {
     size_t bufsz = sizeof(buf);
 
     printf("=== Testing ct_compact ===\n");
+
     /*
      * Setup an CtCdirs with overlapping/adjacent blocks
      * - 192.168.1.0/24

@@ -6,14 +6,24 @@ Tags
 
 .. code-block:: text
 
-	1.0.0 (2026-08-20) -> 1.2.0 (2026-08-22)
-	6 commits.
+	1.0.0 (2026-08-20) -> 1.3.0 (2026-08-23)
+	7 commits.
 
 Commits
 =======
 
 
-* 2026-08-22  : **1.2.0**
+* 2026-08-23  : **1.3.0**
+
+.. code-block:: text
+
+              - **1.3.0**
+            
+                * Add new ct_str_to_cidr_block_limit() which caller can set minimum prefix permitted
+                * compact() add support for mixed IPv4 / IPv6 arrays of cidr blocks.
+                * compact() add a special check if array of cidrs includes 0.0.0.0/0 or ::/0
+
+* 2026-08-22  : **1.2.0, origin/master**
 
 .. code-block:: text
 
@@ -22,7 +32,7 @@ Commits
                 * Add ct_cidrs_intersection().
                   Computes the intersecting subnet(s) of two sets of cidr blocks.
 
-* 2026-08-20  : **1.1.0, origin/master**
+* 2026-08-20  : **1.1.0**
 
 .. code-block:: text
 

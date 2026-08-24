@@ -110,6 +110,7 @@ CIDRTOOLS_EXPORT int ct_cidr_set_prefix(CtCidr *cidr, uint8_t prefix);
 CIDRTOOLS_EXPORT int ct_sort(CtCidrs *cidrs);
 CIDRTOOLS_EXPORT int ct_cidr_sort_compare(const void *a, const void *b);
 CIDRTOOLS_EXPORT int ct_str_to_cidr_block(const char *str, CtCidr *cidr);
+CIDRTOOLS_EXPORT int ct_str_to_cidr_block_limit(const char *str, CtCidr *cidr, size_t prefix_min);
 
 CIDRTOOLS_EXPORT int ct_str_array_to_cidrs(const char **str_array, size_t count, CtCidrs *cidrs);
 CIDRTOOLS_EXPORT int ct_cidrs_to_str_array(const CtCidrs *cidrs, char **dest_array);

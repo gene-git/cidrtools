@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
 
 /**
  * Compact a list of cidr blocks to the smallest number of cidr blocks.
@@ -17,7 +16,7 @@
  * If the blocks are able to be compacted, then cidrs->count will be reduced
  * and the memory cidrs->blocks adjusted acordingly.
  *
- * All the cidr blocks must be the same IP family - either IPv4 or IPv6
+ * cidr blocks can be mixed ``IPV4`` and ``IPv6`` families.
  *
  * :param cidrs: The list of cidr_blocks to be compacted
  *
@@ -25,35 +24,62 @@
  */
 int ct_compact(CtCidrs *cidrs) {
     size_t count_orig = 0;
-    void *ptr = nullptr;
 
-    if (!cidrs || cidrs->count == 0 || !cidrs->blocks) {
+    if (!cidrs || cidrs->count <= 1 || !cidrs->blocks) {
         return 0;
     }
 
+    /*
+     * Family split
+     */
     count_orig = cidrs->count;
+    CtCidrs cidrs_v4 = {};
+    CtCidrs cidrs_v6 = {};
 
-    switch (cidrs->blocks[0].addr.family) {
-        case AF_INET:
-            compact_v4(cidrs);
-            break;
-
-        case AF_INET6:
-            compact_v6(cidrs);
-            break;
-
-        default:
-            return -1;
+    if (ct_split_by_family(cidrs, &cidrs_v4, &cidrs_v6) != 0) {
+        return -1;
     }
 
-    if (cidrs->count != count_orig) {
-        ptr = realloc(cidrs->blocks, cidrs->count * sizeof(CtCidr));
-        if (!ptr) {
+    if (cidrs_v4.count + cidrs_v6.count < 2U) {
+        return -1;
+    }
+
+    if (cidrs_v4.count > 1) {
+        compact_v4(&cidrs_v4);
+    }
+
+    if (cidrs_v6.count > 1) {
+        compact_v6(&cidrs_v6);
+    }
+    
+    /*
+     * Put back together
+     */
+    for (size_t i = 0; i < cidrs_v4.count; i++) {
+        cidrs->blocks[i] = cidrs_v4.blocks[i];
+    }
+
+    size_t count_0 = cidrs_v4.count;
+    for (size_t i = 0; i < cidrs_v6.count; i++) {
+        cidrs->blocks[count_0 + i] = cidrs_v6.blocks[i];
+    }
+
+    /*
+     * Resize and free up
+     */
+    count_0 = cidrs_v4.count + cidrs_v6.count;
+    if (count_0 != count_orig) {
+        if (!ct_allocate_cidrs(count_0, cidrs)) {
             return -1;
         }
-        cidrs->blocks = (CtCidr *)ptr;
+        //ptr = realloc(cidrs->blocks, cidrs->count * sizeof(CtCidr));
+        //if (!ptr) {
+        //    return -1;
+        //}
+        //cidrs->blocks = (CtCidr *)ptr;
     }
-
+    ct_free_cidrs(&cidrs_v4);
+    ct_free_cidrs(&cidrs_v6);
     return 0;
 }
 
