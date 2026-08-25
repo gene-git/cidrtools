@@ -6,14 +6,25 @@ Tags
 
 .. code-block:: text
 
-	1.0.0 (2026-08-20) -> 1.3.0 (2026-08-23)
-	7 commits.
+	1.0.0 (2026-08-20) -> 1.4.0 (2026-08-25)
+	8 commits.
 
 Commits
 =======
 
 
-* 2026-08-23  : **1.3.0**
+* 2026-08-25  : **1.4.0**
+
+.. code-block:: text
+
+              - **1.4.0**
+            
+                * New function : ct_is_ipv4_or_ipv6()
+                * ct_cidr_clean() unrecognized cidr now set to "0.0.0.0/32" instead of being ignored.
+                * ct_str_to_cidr_block(): unrecognized cidr now sets to "0.0.0.0/32" and returns -2
+                  while return of -1 indicates an error.
+
+* 2026-08-23  : **1.3.0, origin/master**
 
 .. code-block:: text
 
@@ -23,7 +34,7 @@ Commits
                 * compact() add support for mixed IPv4 / IPv6 arrays of cidr blocks.
                 * compact() add a special check if array of cidrs includes 0.0.0.0/0 or ::/0
 
-* 2026-08-22  : **1.2.0, origin/master**
+* 2026-08-22  : **1.2.0**
 
 .. code-block:: text
 

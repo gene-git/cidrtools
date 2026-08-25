@@ -104,6 +104,7 @@ CIDRTOOLS_EXPORT char *ct_format_host_bits(const CtCidr *cidr);
 CIDRTOOLS_EXPORT int ct_get_host_bits(const CtCidr *cidr, CtAddress *addr);
 CIDRTOOLS_EXPORT bool ct_is_ipv4(const CtCidr *cidr);
 CIDRTOOLS_EXPORT bool ct_is_ipv6(const CtCidr *cidr);
+CIDRTOOLS_EXPORT bool ct_is_ipv4_or_ipv6(const CtCidr *cidr);
 CIDRTOOLS_EXPORT size_t ct_num_ips(const CtCidr *cidr);
 CIDRTOOLS_EXPORT int ct_range_to_cidrs(const CtAddress *first, const CtAddress *last, CtCidrs *cidrs);
 CIDRTOOLS_EXPORT int ct_cidr_set_prefix(CtCidr *cidr, uint8_t prefix);

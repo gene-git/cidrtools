@@ -4,6 +4,7 @@
  */
 #include "cidrtools.h"
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
 
 /**
@@ -46,8 +47,10 @@ int ct_clean_cidrs(CtCidrs *cidrs) {
 
             default:
                 /*
-                 * Skip over unrecognized families
+                 * reset unrecognized
                  */
+                curr->addr.family = AF_INET;
+                memset(&curr->addr.addr, 0, sizeof(curr->addr.addr));
                 continue;
         }
 
@@ -61,6 +64,8 @@ int ct_clean_cidrs(CtCidrs *cidrs) {
 /**
  * Sanitizes one cidr.
  * Clamps illegal prefixes and zeroes out any host bits.
+ *
+ * Unrecognized cidrs are set to IPv4 0.0.0.0/32
  *
  * :param cidrs: The array of cidrs to be "cleaned"
  * :returns: 0 on success, or -1 on invalid parameters.
@@ -86,8 +91,10 @@ int ct_clean_cidr(CtCidr *cidr) {
 
         default:
             /*
-             * Ignore unrecognized families
+             * reset unknowns
              */
+            cidr->addr.family = AF_INET;
+            memset(&cidr->addr.addr, 0, sizeof(cidr->addr.addr));
             break;
     }
 

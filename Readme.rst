@@ -12,14 +12,21 @@ These can be called directly from C as well as other languages that can bind to 
 shared libraries.
 
 The source is available in `Github cidrtools <https://github.com/gene-git/cidrtools>`_
-as well as the `Arch AUR <https://aur.archlinux.org/packages/py-cidr>`_.
+as well as the `Arch AUR <https://aur.archlinux.org/packages/cidrtools>`_.
 
 There is a companion `cidrtools-cffi <https://github.com/gene-git/cidrtools-cffi>`_ 
-package providing Python bindings to the library.
+package providing Python bindings to the library. Also in the `AUR <https://aur.archlinux.org/packages/cidrtools-cffi>`_.
 This module is significantly faster than a pure Python implementation using the *ipaddr* module.
 
 Recent Changes
 ==============
+
+**1.4.0**
+
+* New function : ct_is_ipv4_or_ipv6()
+* ct_cidr_clean() unrecognized cidr now set to "0.0.0.0/32" instead of being ignored.
+* ct_str_to_cidr_block(): unrecognized cidr now sets to "0.0.0.0/32" and returns -2
+  while return of -1 indicates an error.
 
 **1.3.0**
 

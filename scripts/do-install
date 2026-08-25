@@ -12,7 +12,7 @@ else
     dest="$1"
 fi
 
-pkgdir=$(realpath "$dest")
+dest=$(realpath "$dest")
 
-/usr/bin/meson install -C build/release --destdir "$pkgdir" > /dev/null
+/usr/bin/meson install -C build/release --destdir "$dest" > /dev/null
 

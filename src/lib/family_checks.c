@@ -9,7 +9,6 @@
  * Check if a cidr belongs to the IPv4 address family.
  *
  * :param cidr: The cidr to validate.
- *
  * :returns: true if the cidr is IPv4
  */
 bool ct_is_ipv4(const CtCidr *cidr) {
@@ -23,7 +22,6 @@ bool ct_is_ipv4(const CtCidr *cidr) {
  * Check if an cidr belongs to the IPv6 address family.
  *
  * :param cidr: The cidr to validate.
- *
  * :returns: true if the cidr is IPv6
  */
 bool ct_is_ipv6(const CtCidr *cidr) {
@@ -33,3 +31,15 @@ bool ct_is_ipv6(const CtCidr *cidr) {
     return cidr->addr.family == AF_INET6;
 }
 
+/**
+ * Check if an cidr belongs to the either IPV4 or IPv6 address family.
+ *
+ * :param cidr: The cidr to validate.
+ * :returns: true if the cidr is IPv4 or IPv6
+ */
+bool ct_is_ipv4_or_ipv6(const CtCidr *cidr) {
+    if (!cidr) {
+        return false;
+    }
+    return (bool)(cidr->addr.family == AF_INET6 || cidr->addr.family == AF_INET);
+}
