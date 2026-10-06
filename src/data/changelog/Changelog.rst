@@ -6,12 +6,19 @@ Tags
 
 .. code-block:: text
 
-	1.0.0 (2026-08-20) -> 1.4.1 (2026-10-06)
-	10 commits.
+	1.0.0 (2026-08-20) -> 1.4.2 (2026-10-06)
+	12 commits.
 
 Commits
 =======
 
+
+* 2026-10-06  : **1.4.2**
+
+.. code-block:: text
+
+              - release 1.4.2 (readthedocs fix)
+              - * More tweaks needed for readthedocs to work with the C-code API reference.
 
 * 2026-10-06  : **1.4.1**
 
