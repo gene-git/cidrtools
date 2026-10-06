@@ -13,27 +13,30 @@
 #   - -cpu_level baseline (default is x86-64-v3)
 #   if not set then it is release.
 #
+set -euo pipefail
+
 btype="release"
 cpu_level=""
 
 #
 # command line over rides
 #
-if [[ "$1" == "-cpu_level" ]] ; then
-    shift 1
-    if [[ "$1" == "baseline" ]] ; then
-        cpu_level="-Dcpu_level=baseline"
+if (($# > 0)) ; then
+    if [[ "$1" == "-cpu_level" ]] ; then
         shift 1
-    else
-        echo "Unknown -cpu_level : $1 (expect baseline)"
-        exit 1
+        if [[ "$1" == "baseline" ]] ; then
+            cpu_level="-Dcpu_level=baseline"
+            shift 1
+        else
+            echo "Unknown -cpu_level : $1 (expect baseline)"
+            exit 1
+        fi
+    fi
+    if [[ "$1" != "" ]] ; then
+        btype="$1"
+        shift 1
     fi
 fi
-if [[ "$1" != "" ]] ; then
-    btype="$1"
-    shift 1
-fi
-
 # 
 # meson
 #

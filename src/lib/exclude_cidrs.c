@@ -136,7 +136,7 @@ static bool cidr_exclude_single(const CtCidr *broad, const CtCidr *ex, CtCidrs *
  *
  * :param all: The list of cidrs to be modified in place. The modifed
  *             array will have all cidrs in the *excluded* list removed.
- * :param excludewd: The list of cidrs to be exluded from the full list.
+ * :param excluded: The list of cidrs to be exluded from the full list.
  *
  * :returns: 0 on success, -1 otherwise.
  */

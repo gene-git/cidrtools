@@ -6,12 +6,27 @@ Tags
 
 .. code-block:: text
 
-	1.0.0 (2026-08-20) -> 1.4.0 (2026-08-25)
-	8 commits.
+	1.0.0 (2026-08-20) -> 1.4.1 (2026-10-06)
+	10 commits.
 
 Commits
 =======
 
+
+* 2026-10-06  : **1.4.1**
+
+.. code-block:: text
+
+              - **1.4.1**
+            
+                * Documentation now available on readthedocs https://cidrtools.readthedocs.io
+                * Install local copy of html docs to /usr/share/cidrtools/docs
+                * scripts/do-build: add argument check
+ 2026-09-07   ⋯
+
+.. code-block:: text
+
+              - Add link to manual at top level
 
 * 2026-08-25  : **1.4.0**
 
@@ -24,7 +39,7 @@ Commits
                 * ct_str_to_cidr_block(): unrecognized cidr now sets to "0.0.0.0/32" and returns -2
                   while return of -1 indicates an error.
 
-* 2026-08-23  : **1.3.0, origin/master**
+* 2026-08-23  : **1.3.0**
 
 .. code-block:: text
 

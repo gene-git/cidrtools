@@ -3,7 +3,6 @@
 #
 import os
 import sys
-import subprocess
 
 # --------------------------------------------
 # Set up
@@ -28,7 +27,6 @@ docs_root = os.path.dirname(os.path.abspath(__file__))
 # 
 project = "cidrtools"
 author = 'Gene C'
-latex_engine = 'xelatex'
 
 release = read_version()
 
@@ -47,35 +45,59 @@ hawkmoth_clang_c = [
 # Tell Sphinx's code highlighter not to emit visible/literal unicode whitespace symbols
 # sphinx = baseline, tango = corp color, friendly - brighter, colorful - more so
 # Options: sphinx, friendly, tango
-pygments_style = 'sphinx'
+# pygments_style = 'sphinx'
+latex_engine = 'xelatex'
+latex_use_xindy = True
 
 latex_elements = {
     'papersize': 'letterpaper',
-    'pointsize': '10pt',
+    'pointsize': '11pt',
+
+    'fvset': r'\fvset{fontsize=\scriptsize}',
+
+    'fontpkg': r'''
+        \usepackage{fontspec}
+
+        \setmainfont{Source Sans 3}[Ligatures=TeX]
+        \setsansfont{Source Sans 3}[Ligatures=TeX]
+        \setmonofont{Source Code Pro}
+    ''',
 
     'preamble': r'''
-        \usepackage{microtype}
         \usepackage{parskip}
-        \usepackage{needspace}
-        \usepackage{fontspec}
+        % \usepackage{needspace}
+
+        %
+        % Fix the 11pt headheight layout warnings
+        %
+        \setlength{\headheight}{14pt}
+        \addtolength{\topmargin}{-2pt}
+
+        \usepackage{enumitem}
+        \setlist[itemize]{
+            noitemsep,
+            topsep=6pt,
+            parsep=0pt,
+            partopsep=0pt,
+            after=\vspace{0pt}
+        }
+        \setlist[enumerate]{
+            noitemsep,
+            topsep=6pt,
+            parsep=0pt,
+            partopsep=0pt,
+            after=\vspace{0pt}
+        }
 
         \usepackage{newunicodechar}
         \newunicodechar{␣}{\textvisiblespace}
         \tracinglostchars=0
 
-        \makeatletter
-        \renewcommand{\subsection}[1]{\par\bigskip\needspace{14\baselineskip}\textbf{#1}}
-        %\renewcommand{\subsection}{\par\bigskip\needspace{14\baselineskip}}
-        \makeatother
-
+        %\makeatletter
+        %\renewcommand{\subsection}[1]{\par\bigskip\needspace{14\baselineskip}\textbf{#1}}
+        %%\renewcommand{\subsection}{\par\bigskip\needspace{14\baselineskip}}
+        %\makeatother
         ''',
-
-    'fontpkg': r'''
-        \setmainfont{Fira Sans}           % Ultra-modern geometric sans font
-        \setsansfont{Fira Sans}
-        \setmonofont{Fira Mono}[ Scale=0.9] % Premium look for C function signatures
-    ''',
-
 }
 
 # Grouping the document tree into a single LaTeX document manual volume.
@@ -89,3 +111,8 @@ latex_documents = [
         'manual'
     ),
 ]
+
+html_theme = 'sphinx_rtd_theme'  # Works exactly the same if using 'furo' or 'alabaster'
+html_static_path = ['_static']
+html_css_files = [ 'custom.css',]
+

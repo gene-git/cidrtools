@@ -1,0 +1,27 @@
+Recent Changes
+==============
+
+**1.4.1**
+
+* Documentation now available on readthedocs https://cidrtools.readthedocs.io
+* Install local copy of html docs to /usr/share/cidrtools/docs
+* scripts/do-build: add argument check
+
+**1.4.0**
+
+* New function : ct_is_ipv4_or_ipv6()
+* ct_cidr_clean() unrecognized cidr now set to "0.0.0.0/32" instead of being ignored.
+* ct_str_to_cidr_block(): unrecognized cidr now sets to "0.0.0.0/32" and returns -2
+  while return of -1 indicates an error.
+
+**1.3.0**
+
+* Add new ct_str_to_cidr_block_limit() which caller can set minimum prefix permitted
+* compact() add support for mixed IPv4 / IPv6 arrays of cidr blocks.
+* compact() add a special check if array of cidrs includes 0.0.0.0/0 or ::/0
+
+**1.2.0**
+
+* Add ct_cidrs_intersection().
+  Computes the intersecting subnet(s) of two sets of cidr blocks.
+

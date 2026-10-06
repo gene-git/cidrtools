@@ -4,5 +4,5 @@
 #
 cd ${0%/*}
 
-make latexpdf 
+make html 
 make latexpdf

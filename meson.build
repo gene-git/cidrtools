@@ -493,6 +493,14 @@ install_data(
   install_dir: d_share / 'cidrtools' 
 )
 
+install_subdir(
+  [
+    s_docs / 'html',
+  ],
+  install_dir: d_share / 'cidrtools/docs',
+  strip_directory: false
+)
+
 install_data(
   [
     s_license / 'License-gpl-2.0.txt',
