@@ -4,9 +4,12 @@ build:
   os: "ubuntu-24.04"
   tools:
     python: "3.14"
-  jobs:
-    post_install:
-      - pip install -r src/data/docs/requirements.txt
+  apt_packages:
+    - libclang-dev
+
+python:
+  install:
+    - requirements: src/data/docs/requirements.txt
 
 sphinx:
   configuration: src/data/docs/conf.py

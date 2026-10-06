@@ -1,6 +1,10 @@
 Recent Changes
 ==============
 
+**1.4.2**
+
+* More tweaks needed for readthedocs to work with the C-code API reference.
+
 **1.4.1**
 
 * Documentation now available on readthedocs https://cidrtools.readthedocs.io

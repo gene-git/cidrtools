@@ -4,6 +4,10 @@
 import os
 import sys
 
+if os.environ.get('READTHEDOCS') == 'True':
+    from hawkmoth.util import readthedocs
+    readthedocs.clang_setup()
+
 # --------------------------------------------
 # Set up
 #
